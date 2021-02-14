@@ -1,5 +1,6 @@
 using Distributed
 using Printf
+using ProgressMeter
 
 @everywhere using Distributions
 @everywhere include("mandelbrot.jl")
@@ -10,7 +11,7 @@ function integrate(threshold, x_range, y_range, samples)
 
 	N_I = 0
 	N_T = samples
-	N_I = @distributed (+) for _ = 1:samples
+	N_I = @showprogress @distributed (+) for _ = 1:samples
 		x = rand(Uniform(x_min, x_max))
 		y = rand(Uniform(y_min, y_max))
 		c = x + y * im
@@ -39,7 +40,7 @@ end
 x_range = (-2, 0.5)
 y_range = (0, 1.2)
 samples = 10000000
-for threshold = 1000:500:10000
+@showprogress for threshold = 100:500:1000
 	A, u_A = integrate(threshold, x_range, y_range, samples)
 	A *= 2
 	u_A *= 2
