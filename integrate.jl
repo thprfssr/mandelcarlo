@@ -39,8 +39,9 @@ end
 
 x_range = (-2, 0.5)
 y_range = (0, 1.2)
-samples = 10000000
-@showprogress for threshold = 100:500:1000
+samples = 50000000
+while true
+	threshold = rand(5000:10000)
 	A, u_A = integrate(threshold, x_range, y_range, samples)
 	A *= 2
 	u_A *= 2
