@@ -11,7 +11,7 @@ function integrate(threshold, x_range, y_range, samples)
 
 	N_I = 0
 	N_T = samples
-	N_I = @showprogress @distributed (+) for _ = 1:samples
+	N_I = @distributed (+) for _ = 1:samples
 		x = rand(Uniform(x_min, x_max))
 		y = rand(Uniform(y_min, y_max))
 		c = x + y * im
